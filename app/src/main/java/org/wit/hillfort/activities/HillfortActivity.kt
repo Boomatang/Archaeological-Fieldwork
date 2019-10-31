@@ -21,16 +21,26 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     info("Hillfort Activity started..")
 
     app = application as MainApp
+    var edit = false
+    if(intent.hasExtra("hillfort_edit")) {
+      hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
+      hillfortTitle.setText(hillfort.title)
+      description.setText(hillfort.description)
+      btnAdd.setText(R.string.update_hillfort)
+      edit = true
+    }
 
     btnAdd.setOnClickListener() {
       hillfort.title = hillfortTitle.text.toString()
       hillfort.description = description.text.toString()
       if (hillfort.title.isNotEmpty()) {
-        app.hillforts.add(hillfort.copy())
-        info("add Button Pressed: ${hillfort}")
-        for (i in app.hillforts.indices) {
-          info("Hillfort[$i]:${app.hillforts[i]}")
+        if(edit){
+          app.hillforts.update(hillfort.copy())
+        } else {
+          app.hillforts.create(hillfort.copy())
         }
+
+        info("add Button Pressed: ${hillfort}")
         setResult(AppCompatActivity.RESULT_OK)
         finish()
       } else {
