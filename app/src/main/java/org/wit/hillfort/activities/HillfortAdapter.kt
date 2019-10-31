@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 import org.wit.hillfort.R
+import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.HillfortModel
 
 interface HillfortListener {
@@ -41,6 +42,12 @@ class HillfortAdapter constructor(
             itemView.hillfortTitle.text = hillfort.title
             itemView.description.text = hillfort.description
             itemView.setOnClickListener {listener.onHillfortClick(hillfort)}
+
+            if(hillfort.image.isNotEmpty()) {
+                itemView.imageView.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
+            } else {
+                itemView.imageView.visibility = View.INVISIBLE
+            }
         }
     }
 }

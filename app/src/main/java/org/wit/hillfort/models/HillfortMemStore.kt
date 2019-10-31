@@ -24,6 +24,7 @@ class HillfortMemStore : HillfortStore {
         if (foundHillfort != null) {
             foundHillfort.title = hillfort.title
             foundHillfort.description = hillfort.description
+            foundHillfort.image = hillfort.image
         }
     }
 }

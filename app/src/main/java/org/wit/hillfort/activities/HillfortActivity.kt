@@ -1,5 +1,6 @@
 package org.wit.hillfort.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_hillfort.*
@@ -7,11 +8,15 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
+import org.wit.hillfort.helpers.readImage
+import org.wit.hillfort.helpers.readImageFromPath
+import org.wit.hillfort.helpers.showImagePicker
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
+    val IMAGE_REQUEST = 1
   var hillfort = HillfortModel()
   lateinit var app: MainApp
 
@@ -26,7 +31,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
       hillfortTitle.setText(hillfort.title)
       description.setText(hillfort.description)
+        hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
       btnAdd.setText(R.string.update_hillfort)
+        if (hillfort.image.isNotEmpty()) {
+            chooseImage.setText(R.string.change_hillfort_image)
+        }
       edit = true
     }
 
@@ -47,6 +56,26 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         toast("Please Enter a title")
       }
     }
+
+      chooseImage.setOnClickListener {
+          info("Select Image")
+          showImagePicker(this, IMAGE_REQUEST)
+      }
   }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            IMAGE_REQUEST -> {
+                if (data != null) {
+                    hillfort.image = data.data.toString()
+                    hillfortImage.setImageBitmap(readImage(this, resultCode, data))
+                    chooseImage.setText(R.string.change_hillfort_image)
+
+                }
+            }
+        }
+    }
+
 }
 
