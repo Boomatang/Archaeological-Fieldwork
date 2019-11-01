@@ -6,9 +6,11 @@
   <string name="update_hillfort">Update Hillfort</string>
   <string name="button_addImage">Add Image</string>
   <string name="button_addHillfort">Add Hillfort</string>
+  <string name="button_location">Set Location</string>
   <string name="select_hillfort_image">select hillfort image</string>
   <string name="sample_title">Sample Title</string>
   <string name="sample_description">Sample Description</string>
   <string name="change_hillfort_image">Change hillfort image</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
 
