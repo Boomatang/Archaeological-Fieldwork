@@ -12,5 +12,7 @@
   <string name="sample_description">Sample Description</string>
   <string name="change_hillfort_image">Change hillfort image</string>
     <string name="title_activity_maps">Map</string>
+  <string name="delete">Delete</string>
+  <string name="cancel">Cancel</string>
 </resources>
 

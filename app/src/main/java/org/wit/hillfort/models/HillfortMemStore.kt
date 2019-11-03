@@ -24,4 +24,8 @@ class HillfortMemStore : HillfortStore {
     override fun update(hillfort: HillfortModel) {
         updateHillfort(hillfort, hillforts)
     }
+
+    override fun delete(hillfort: HillfortModel) {
+        hillforts.remove(hillfort)
+    }
 }
