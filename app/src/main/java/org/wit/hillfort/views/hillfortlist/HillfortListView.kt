@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import org.jetbrains.anko.startActivity
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.views.maphillforts.MapHillfortsView
 
 class HillfortListView : AppCompatActivity(), HillfortListener {
 
@@ -31,6 +33,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
       R.id.item_add -> presenter.doAddHillfort()
+      R.id.view_map ->  startActivity<MapHillfortsView>()
     }
     return super.onOptionsItemSelected(item)
   }

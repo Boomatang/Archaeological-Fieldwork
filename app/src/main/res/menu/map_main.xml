@@ -3,11 +3,10 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <item
-      android:id="@+id/view_map"
-      android:icon="@android:drawable/ic_dialog_map"
-      android:title="@string/view_map"
-      app:showAsAction="ifRoom"
-      />
+      android:id="@+id/view_list"
+      android:icon="@android:drawable/ic_menu_revert"
+      android:title="@string/view_list"
+      app:showAsAction="ifRoom" />
 
   <item
     android:id="@+id/item_add"

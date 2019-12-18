@@ -1,18 +1,20 @@
 <resources>
-  <string name="app_name">Hillfort</string>
-  <string name="hint_hillfortTitle">Hillfort Title</string>
-  <string name="hint_hillfortDescription">Description </string>
-  <string name="menu_addHillfort">Add</string>
-  <string name="update_hillfort">Update Hillfort</string>
-  <string name="button_addImage">Add Image</string>
-  <string name="button_addHillfort">Add Hillfort</string>
-  <string name="button_location">Set Location</string>
-  <string name="select_hillfort_image">select hillfort image</string>
-  <string name="sample_title">Sample Title</string>
-  <string name="sample_description">Sample Description</string>
-  <string name="change_hillfort_image">Change hillfort image</string>
+    <string name="app_name">Hillfort</string>
+    <string name="hint_hillfortTitle">Hillfort Title</string>
+    <string name="hint_hillfortDescription">Description </string>
+    <string name="menu_addHillfort">Add</string>
+    <string name="update_hillfort">Update Hillfort</string>
+    <string name="button_addImage">Add Image</string>
+    <string name="button_addHillfort">Add Hillfort</string>
+    <string name="button_location">Set Location</string>
+    <string name="select_hillfort_image">select hillfort image</string>
+    <string name="sample_title">Sample Title</string>
+    <string name="sample_description">Sample Description</string>
+    <string name="change_hillfort_image">Change hillfort image</string>
     <string name="title_activity_maps">Map</string>
-  <string name="delete">Delete</string>
-  <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="view_map">View Map</string>
+    <string name="view_list">View List</string>
 </resources>
 
