@@ -49,6 +49,12 @@ class HillfortAdapter constructor(
             } else {
                 itemView.imageView.visibility = View.INVISIBLE
             }
+
+            if(hillfort.favourite) {
+                itemView.favStar.visibility = View.VISIBLE
+            } else {
+                itemView.favStar.visibility = View.INVISIBLE
+            }
         }
     }
 }
