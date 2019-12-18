@@ -31,10 +31,10 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.MapsActivity"
+            android:name=".views.maps.MapsView"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".activities.HillfortActivity"></activity>
-        <activity android:name=".activities.HillfortListActivity">
+        <activity android:name=".views.edithillfort.EditHillfortView"></activity>
+        <activity android:name=".views.hillfortlist.HillfortListView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

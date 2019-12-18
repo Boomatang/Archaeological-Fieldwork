@@ -1,34 +1,24 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.hillfortlist
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import kotlinx.android.synthetic.main.card_hillfort.view.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
 import org.wit.hillfort.R
-import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 
-class HillfortListActivity : AppCompatActivity(), HillfortListener {
+class HillfortListView : AppCompatActivity(), HillfortListener {
 
-  lateinit var app: MainApp
+  lateinit var presenter: HillfortListPresenter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort_list)
-    app = application as MainApp
-
-    toolbar.title = title
-    setSupportActionBar(toolbar)
-
-    val layoutManager = LinearLayoutManager(this)
-    recyclerView.layoutManager = layoutManager
-    loadHillforts()
+    setupToolbar()
+    presenter = HillfortListPresenter(this)
+    showHillfortListView()
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -38,28 +28,34 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean {
     when (item?.itemId) {
-      R.id.item_add -> startActivityForResult<HillfortActivity>(0)
+      R.id.item_add -> presenter.doAddHillfort()
     }
     return super.onOptionsItemSelected(item)
   }
 
   override fun onHillfortClick(hillfort: HillfortModel) {
-    startActivityForResult(intentFor<HillfortActivity>().putExtra("hillfort_edit", hillfort), 0)
+    presenter.doEditHillfort(hillfort)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    loadHillforts()
+    showHillfortListView()
     super.onActivityResult(requestCode, resultCode, data)
 
   }
 
-  private fun loadHillforts() {
-    showHillforts(app.hillforts.findAll())
+  private fun showHillfortListView() {
+    setupHillfortsListView(presenter.getHillforts())
   }
 
-  fun showHillforts(hillfort: List<HillfortModel>){
+  private fun setupHillfortsListView(hillfort: List<HillfortModel>){
+    val layoutManager = LinearLayoutManager(this)
+    recyclerView.layoutManager = layoutManager
     recyclerView.adapter = HillfortAdapter(hillfort, this)
     recyclerView.adapter?.notifyDataSetChanged()
   }
 
+  private fun setupToolbar(){
+    toolbar.title = title
+    setSupportActionBar(toolbar)
+  }
 }
