@@ -47,7 +47,7 @@ class EditHillfortView : AppCompatActivity(), AnkoLogger {
 
     private fun btnAddAction(){
         if (hillfortTitle.text.isNotEmpty()) {
-            presenter.doAddorSave(hillfortTitle.text.toString(), description.text.toString(), ratingBar.rating)
+            presenter.doAddorSave(hillfortTitle.text.toString(), description.text.toString(), ratingBar.rating, favouriteToggle.isChecked)
         } else {
             toast("Please Enter a title")
         }
@@ -56,6 +56,9 @@ class EditHillfortView : AppCompatActivity(), AnkoLogger {
     fun showHillfort(hillfort: HillfortModel) {
         hillfortTitle.setText(hillfort.title)
         description.setText(hillfort.description)
+
+        favouriteToggle.isChecked = hillfort.favourite
+
         hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
         ratingBar.rating = hillfort.rating
         if (hillfort.image != null) {
@@ -68,6 +71,7 @@ class EditHillfortView : AppCompatActivity(), AnkoLogger {
         btnAdd.setOnClickListener { btnAddAction() }
         hillfortLocation.setOnClickListener { presenter.doSetLocation() }
         chooseImage.setOnClickListener { presenter.doSelectImage() }
+        favouriteToggle.setOnClickListener { presenter.doChangeFavouriteSetting() }
     }
 
     private fun setUpToolBar(){

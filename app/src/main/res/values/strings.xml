@@ -16,5 +16,7 @@
     <string name="cancel">Cancel</string>
     <string name="view_map">View Map</string>
     <string name="view_list">View List</string>
+    <string name="addFavourite">Add to Favourites</string>
+    <string name="removeFavourite">Remove from Favourites</string>
 </resources>
 
