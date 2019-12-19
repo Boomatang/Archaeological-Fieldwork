@@ -12,5 +12,6 @@ fun updateHillfort(hillfort: HillfortModel, hillforts: List<HillfortModel>) {
         foundHillfort.lat = hillfort.lat
         foundHillfort.lng = hillfort.lng
         foundHillfort.zoom = hillfort.zoom
+        foundHillfort.favourite = hillfort.favourite
     }
 }

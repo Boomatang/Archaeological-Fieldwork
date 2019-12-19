@@ -6,11 +6,13 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.uiThread
+import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.wit.hillfort.views.maps.MapsView
 import org.wit.hillfort.helpers.*
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
+import org.jetbrains.anko.info
 
 class EditHillfortPresenter(val view: EditHillfortView): AnkoLogger {
 
@@ -25,15 +27,16 @@ class EditHillfortPresenter(val view: EditHillfortView): AnkoLogger {
         if (view.intent.hasExtra(EDIT)) {
             edit = true
             hillfort = view.intent.extras?.getParcelable<HillfortModel>(EDIT)!!
+            info("APP: loaded hillfort: $hillfort")
             view.showHillfort(hillfort)
         }
     }
 
-    fun doAddorSave(title: String, description: String, rating: Float){
+    fun doAddorSave(title: String, description: String, rating: Float, favourite: Boolean){
         hillfort.title = title
         hillfort.description = description
         hillfort.rating = rating
-
+        hillfort.favourite = favourite
         doAsync {
             if (edit) {
                 app.hillforts.update(hillfort)
@@ -74,6 +77,11 @@ class EditHillfortPresenter(val view: EditHillfortView): AnkoLogger {
             IMAGE_REQUEST -> imageResult(data)
             LOCATION_REQUEST -> locationResult(data)
         }
+    }
+
+    fun doChangeFavouriteSetting() {
+        info("APP: ${view.favouriteToggle.isChecked}")
+//        hillfort.favourite = view.favouriteToggle.isChecked
     }
 
     private fun imageResult(data: Intent) {

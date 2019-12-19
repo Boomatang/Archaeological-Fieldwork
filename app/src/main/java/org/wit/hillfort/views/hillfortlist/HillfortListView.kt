@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -16,6 +15,7 @@ import org.wit.hillfort.views.maphillforts.MapHillfortsView
 class HillfortListView : AppCompatActivity(), HillfortListener {
 
   lateinit var presenter: HillfortListPresenter
+  lateinit var menu: Menu
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -26,14 +26,17 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    this.menu = menu!!
     menuInflater.inflate(R.menu.menu_main, menu)
+    val hideFav = menu.findItem(R.id.hide_fav)
+    hideFav.isVisible = false
     return super.onCreateOptionsMenu(menu)
   }
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.item_add -> presenter.doAddHillfort()
-      R.id.view_map ->  startActivity<MapHillfortsView>()
+
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    if (item != null) {
+      presenter.doOnOptionsItemSelected(item)
     }
     return super.onOptionsItemSelected(item)
   }
@@ -43,25 +46,15 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    showHillfortListView()
+    val hideFav = menu.findItem(R.id.hide_fav)
+    showHillfortListView(hideFav.isVisible)
     super.onActivityResult(requestCode, resultCode, data)
 
   }
 
-  private fun showHillfortListView() {
-    doAsync {
-      val forts = presenter.getHillforts()
-      uiThread {
-        setupHillfortsListView(forts)
-      }
-    }
-  }
 
-  private fun setupHillfortsListView(hillfort: List<HillfortModel>){
-    val layoutManager = LinearLayoutManager(this)
-    recyclerView.layoutManager = layoutManager
-    recyclerView.adapter = HillfortAdapter(hillfort, this)
-    recyclerView.adapter?.notifyDataSetChanged()
+  private fun showHillfortListView(filter: Boolean = false) {
+    presenter.doFilterHillfortList(filter)
   }
 
   private fun setupToolbar(){

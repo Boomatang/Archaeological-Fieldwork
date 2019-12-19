@@ -2,12 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
+    <item
+      android:id="@+id/show_fav"
+      android:icon="@android:drawable/btn_star_big_off"
+      android:title="@string/showFavourites"
+      app:showAsAction="ifRoom" />
+
   <item
-      android:id="@+id/view_map"
-      android:icon="@android:drawable/ic_dialog_map"
-      android:title="@string/view_map"
-      app:showAsAction="ifRoom"
-      />
+      android:id="@+id/hide_fav"
+      android:icon="@android:drawable/btn_star_big_on"
+      android:title="@string/hideFavourites"
+      app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/view_map"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="@string/view_map"
+        app:showAsAction="ifRoom"
+        />
 
   <item
     android:id="@+id/item_add"

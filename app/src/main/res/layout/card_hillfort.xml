@@ -73,6 +73,15 @@
         app:layout_constraintStart_toStartOf="@+id/description"
         app:layout_constraintTop_toBottomOf="@+id/description" />
 
+    <ImageView
+        android:id="@+id/favStar"
+        android:layout_width="24dp"
+        android:layout_height="21dp"
+        android:layout_toEndOf="@+id/hillfortTitle"
+        app:layout_constraintEnd_toEndOf="@+id/hillfortTitle"
+        app:layout_constraintStart_toStartOf="@+id/hillfortTitle"
+        app:layout_constraintTop_toTopOf="@+id/hillfortTitle"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

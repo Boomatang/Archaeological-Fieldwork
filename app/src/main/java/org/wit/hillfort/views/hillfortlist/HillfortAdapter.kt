@@ -44,10 +44,24 @@ class HillfortAdapter constructor(
             itemView.cardRatingBar.rating = hillfort.rating
             itemView.setOnClickListener {listener.onHillfortClick(hillfort)}
 
+            showImage(hillfort)
+            showFavStar(hillfort)
+
+        }
+
+        private fun showImage(hillfort: HillfortModel) {
             if(hillfort.image.isNotEmpty()) {
                 itemView.imageView.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
             } else {
                 itemView.imageView.visibility = View.INVISIBLE
+            }
+        }
+
+        private fun showFavStar(hillfort: HillfortModel) {
+            if(hillfort.favourite) {
+                itemView.favStar.visibility = View.VISIBLE
+            } else {
+                itemView.favStar.visibility = View.INVISIBLE
             }
         }
     }
