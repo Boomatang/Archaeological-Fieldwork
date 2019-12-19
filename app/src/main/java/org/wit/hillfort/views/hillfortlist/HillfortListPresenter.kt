@@ -1,5 +1,6 @@
 package org.wit.hillfort.views.hillfortlist
 
+import android.annotation.SuppressLint
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -13,6 +14,7 @@ import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.edithillfort.EditHillfortView
 import org.wit.hillfort.views.login.LoginView
 import org.wit.hillfort.views.maphillforts.MapHillfortsView
+import java.util.*
 
 class HillfortListPresenter(val view: HillfortListView) : AnkoLogger {
 
@@ -41,13 +43,19 @@ class HillfortListPresenter(val view: HillfortListView) : AnkoLogger {
             R.id.sign_out -> signOut()
         }
     }
-    fun doFilterHillfortList(filter: Boolean){
+    @SuppressLint("DefaultLocale")
+    fun doFilterHillfortList(filter: Boolean = false, search: String = ""){
         doAsync {
-            val hillforts = if (filter) {
+            var hillforts = if (filter) {
                 getHillforts().filter { it.favourite }
 
             } else {
                 getHillforts()
+            }
+
+            if (search.isNotEmpty()) {
+                hillforts = hillforts.filter { it.title.toLowerCase().contains(search)
+                }
             }
             uiThread {
                 setupHillfortsListView(hillforts)
