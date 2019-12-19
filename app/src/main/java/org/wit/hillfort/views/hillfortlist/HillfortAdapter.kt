@@ -41,6 +41,7 @@ class HillfortAdapter constructor(
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
             itemView.hillfortTitle.text = hillfort.title
             itemView.description.text = hillfort.description
+            itemView.cardRatingBar.rating = hillfort.rating
             itemView.setOnClickListener {listener.onHillfortClick(hillfort)}
 
             if(hillfort.image.isNotEmpty()) {

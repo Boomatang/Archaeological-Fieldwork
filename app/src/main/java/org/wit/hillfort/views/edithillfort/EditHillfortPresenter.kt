@@ -2,6 +2,8 @@ package org.wit.hillfort.views.edithillfort
 
 import android.content.Intent
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.uiThread
 import org.wit.hillfort.views.maps.MapsView
@@ -10,7 +12,7 @@ import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
 
-class EditHillfortPresenter(val view: EditHillfortView) {
+class EditHillfortPresenter(val view: EditHillfortView): AnkoLogger {
 
 
     var hillfort = HillfortModel()
@@ -27,9 +29,11 @@ class EditHillfortPresenter(val view: EditHillfortView) {
         }
     }
 
-    fun doAddorSave(title: String, description: String){
+    fun doAddorSave(title: String, description: String, rating: Float){
         hillfort.title = title
         hillfort.description = description
+        hillfort.rating = rating
+
         doAsync {
             if (edit) {
                 app.hillforts.update(hillfort)
