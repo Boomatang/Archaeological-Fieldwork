@@ -9,6 +9,9 @@ internal fun getId(): Long {
 }
 
 class HillfortMemStore : HillfortStore {
+    override fun findOne(id: Long): HillfortModel {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     val hillforts = ArrayList<HillfortModel>()
 

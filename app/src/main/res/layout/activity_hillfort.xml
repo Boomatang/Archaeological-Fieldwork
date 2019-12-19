@@ -5,7 +5,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="org.wit.hillfort.activities.HillfortActivity">
+  tools:context="org.wit.hillfort.views.edithillfort.EditHillfortView">
 
   <RelativeLayout
     android:layout_width="match_parent"
@@ -66,6 +66,24 @@
           android:padding="8dp"
           android:textColor="@color/colorPrimaryDark"
           android:textSize="14sp"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:numStars="5" />
+        <ToggleButton
+            android:id="@+id/favouriteToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@color/colorAccent"
+            android:text="ToggleButton"
+            android:textColor="@color/colorPrimary"
+            android:textOff="@string/addFavourite"
+            android:textOn="@string/removeFavourite"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/hillfortLocation"

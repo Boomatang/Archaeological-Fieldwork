@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.hillfortlist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -41,12 +41,27 @@ class HillfortAdapter constructor(
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
             itemView.hillfortTitle.text = hillfort.title
             itemView.description.text = hillfort.description
+            itemView.cardRatingBar.rating = hillfort.rating
             itemView.setOnClickListener {listener.onHillfortClick(hillfort)}
 
+            showImage(hillfort)
+            showFavStar(hillfort)
+
+        }
+
+        private fun showImage(hillfort: HillfortModel) {
             if(hillfort.image.isNotEmpty()) {
                 itemView.imageView.setImageBitmap(readImageFromPath(itemView.context, hillfort.image))
             } else {
                 itemView.imageView.visibility = View.INVISIBLE
+            }
+        }
+
+        private fun showFavStar(hillfort: HillfortModel) {
+            if(hillfort.favourite) {
+                itemView.favStar.visibility = View.VISIBLE
+            } else {
+                itemView.favStar.visibility = View.INVISIBLE
             }
         }
     }
