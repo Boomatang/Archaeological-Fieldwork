@@ -59,10 +59,8 @@ class MapHillfortsView : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         return false
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item != null) {
-            presenter.doOnOptionsItemSelected(item)
-        }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        presenter.doOnOptionsItemSelected(item)
         return super.onOptionsItemSelected(item)
     }
 

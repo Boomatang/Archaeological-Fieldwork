@@ -7,8 +7,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_map_hillforts.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.main.MainApp
@@ -32,15 +31,15 @@ class MapHillfortsPresenter(val view: MapHillfortsView): AnkoLogger {
     }
 
     fun onMarkerClick(marker: Marker) {
-        hillfort = app.hillforts.findOne(marker.tag as Long)
-        view.currentTitle.text = hillfort.title
-        view.currentDescription.text = hillfort.description
-        if(hillfort.image.isNotEmpty()) {
-            view.currentImage.setImageBitmap(readImageFromPath(view, hillfort.image))
-        } else {
-            view.currentImage.visibility = View.INVISIBLE
+//        FIXME there is some bug here that does not run the doAsync
+        info { "APP: before my doAsync" }
+        doAsync {
+            hillfort = app.hillforts.findOne(marker.tag as Long)
+            info { "APP: before my uiThread" }
+
+            uiThread { updateDetailSection() }
         }
-        hideBlankData()
+
     }
 
     fun doOnOptionsItemSelected(item: MenuItem) {
@@ -53,11 +52,16 @@ class MapHillfortsPresenter(val view: MapHillfortsView): AnkoLogger {
     private fun configureMap() {
         view.map.setOnMarkerClickListener(view)
         view.map.uiSettings.setZoomControlsEnabled(true)
-        app.hillforts.findAll().forEach {
-            val loc = LatLng(it.lat, it.lng)
-            val options = MarkerOptions().title(it.title).position(loc)
-            view.map.addMarker(options).tag = it.id
-            view.map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+        doAsync {
+            val hillforts = app.hillforts.findAll()
+            uiThread {
+                hillforts.forEach {
+                    val loc = LatLng(it.lat, it.lng)
+                    val options = MarkerOptions().title(it.title).position(loc)
+                    view.map.addMarker(options).tag = it.id
+                    view.map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+                }
+            }
         }
     }
 
@@ -81,5 +85,17 @@ class MapHillfortsPresenter(val view: MapHillfortsView): AnkoLogger {
         }
 
 
+    }
+
+    private fun updateDetailSection() {
+        info { "APP: Inside my update" }
+        view.currentTitle.text = hillfort.title
+        view.currentDescription.text = hillfort.description
+        if (hillfort.image.isNotEmpty()) {
+            view.currentImage.setImageBitmap(readImageFromPath(view, hillfort.image))
+        } else {
+            view.currentImage.visibility = View.INVISIBLE
+        }
+        hideBlankData()
     }
 }

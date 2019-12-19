@@ -32,5 +32,7 @@ class HillfortRoomStore(val context: Context) : HillfortStore {
         return dao.findAll()
     }
 
-
+    override fun findOne(id: Long): HillfortModel {
+        return dao.findById(id)
+    }
 }
