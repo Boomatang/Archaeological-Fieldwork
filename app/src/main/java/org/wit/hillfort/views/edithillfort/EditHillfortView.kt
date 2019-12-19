@@ -47,7 +47,7 @@ class EditHillfortView : AppCompatActivity(), AnkoLogger {
 
     private fun btnAddAction(){
         if (hillfortTitle.text.isNotEmpty()) {
-            presenter.doAddorSave(hillfortTitle.text.toString(), description.text.toString())
+            presenter.doAddorSave(hillfortTitle.text.toString(), description.text.toString(), ratingBar.rating)
         } else {
             toast("Please Enter a title")
         }
@@ -57,6 +57,7 @@ class EditHillfortView : AppCompatActivity(), AnkoLogger {
         hillfortTitle.setText(hillfort.title)
         description.setText(hillfort.description)
         hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+        ratingBar.rating = hillfort.rating
         if (hillfort.image != null) {
             chooseImage.setText(R.string.change_hillfort_image)
         }
