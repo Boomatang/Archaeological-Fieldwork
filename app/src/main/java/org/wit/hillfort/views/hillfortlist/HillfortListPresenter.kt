@@ -3,16 +3,14 @@ package org.wit.hillfort.views.hillfortlist
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
-import org.jetbrains.anko.uiThread
+import org.jetbrains.anko.*
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.BLANK_REQUEST
 import org.wit.hillfort.helpers.EDIT
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.edithillfort.EditHillfortView
+import org.wit.hillfort.views.maphillforts.MapHillfortsView
 
 class HillfortListPresenter(val view: HillfortListView) {
 
@@ -37,6 +35,7 @@ class HillfortListPresenter(val view: HillfortListView) {
             R.id.item_add -> doAddHillfort()
             R.id.show_fav -> showFavourites()
             R.id.hide_fav -> displayAll()
+            R.id.view_map -> view.startActivity<MapHillfortsView>()
         }
     }
     fun doFilterHillfortList(filter: Boolean){

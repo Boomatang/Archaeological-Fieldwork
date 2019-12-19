@@ -54,8 +54,12 @@ class EditHillfortPresenter(val view: EditHillfortView): AnkoLogger {
     }
 
     fun doDelete(){
-        app.hillforts.delete(hillfort)
-        view.finish()
+        doAsync {
+            app.hillforts.delete(hillfort)
+            uiThread {
+                view.finish()
+            }
+        }
     }
 
     fun doSelectImage(){
