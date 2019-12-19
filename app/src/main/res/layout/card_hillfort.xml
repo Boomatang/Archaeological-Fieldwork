@@ -65,13 +65,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/description"
         android:layout_alignStart="@+id/description"
-        android:layout_marginStart="8dp"
         android:maxHeight="20dip"
         android:minHeight="20dip"
         android:numStars="5"
         android:rating="5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/description"
         app:layout_constraintTop_toBottomOf="@+id/description" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
