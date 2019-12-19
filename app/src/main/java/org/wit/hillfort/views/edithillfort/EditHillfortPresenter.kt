@@ -1,7 +1,9 @@
 package org.wit.hillfort.views.edithillfort
 
 import android.content.Intent
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.uiThread
 import org.wit.hillfort.views.maps.MapsView
 import org.wit.hillfort.helpers.*
 import org.wit.hillfort.main.MainApp
@@ -28,12 +30,16 @@ class EditHillfortPresenter(val view: EditHillfortView) {
     fun doAddorSave(title: String, description: String){
         hillfort.title = title
         hillfort.description = description
-        if (edit) {
-            app.hillforts.update(hillfort)
-        } else {
-            app.hillforts.create(hillfort)
+        doAsync {
+            if (edit) {
+                app.hillforts.update(hillfort)
+            } else {
+                app.hillforts.create(hillfort)
+            }
+            uiThread {
+                view.finish()
+            }
         }
-        view.finish()
     }
 
     fun doCancel(){

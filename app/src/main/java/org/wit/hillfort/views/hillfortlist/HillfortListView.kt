@@ -6,6 +6,8 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
 
@@ -44,7 +46,12 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
   }
 
   private fun showHillfortListView() {
-    setupHillfortsListView(presenter.getHillforts())
+    doAsync {
+      val forts = presenter.getHillforts()
+      uiThread {
+        setupHillfortsListView(forts)
+      }
+    }
   }
 
   private fun setupHillfortsListView(hillfort: List<HillfortModel>){
