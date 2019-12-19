@@ -20,6 +20,7 @@ fun generateRandomId(): Long {
 }
 
 class HillfortJSONStore : HillfortStore, AnkoLogger {
+
     val context: Context
     var hillforts = mutableListOf<HillfortModel>()
 
@@ -48,6 +49,10 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     override fun delete(hillfort: HillfortModel) {
         hillforts.remove(hillfort)
         serialize()
+    }
+    override fun findOne(id: Long): HillfortModel {
+        val forts = hillforts.filter { it.id == id }
+        return forts[0]
     }
 
     private fun serialize() {
