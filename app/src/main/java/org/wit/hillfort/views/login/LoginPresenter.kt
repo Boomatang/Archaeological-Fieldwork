@@ -8,13 +8,24 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import org.wit.hillfort.main.MainApp
+import org.wit.hillfort.models.HillfortFireStore
 import org.wit.hillfort.views.hillfortlist.HillfortListView
 
 class LoginPresenter(val view:  LoginView): AnkoLogger {
 
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    var fireStore: HillfortFireStore? = null
+    var app: MainApp
 
-    fun doLogin(email: String, password: String) {
+    init {
+        app = view.application as MainApp
+        if (app.hillforts is HillfortFireStore) {
+            fireStore = app.hillforts as HillfortFireStore
+        }
+
+    }
+        fun doLogin(email: String, password: String) {
         info { "Login was pressed" }
         showProgress()
         loginUser(email, password)
@@ -29,7 +40,7 @@ class LoginPresenter(val view:  LoginView): AnkoLogger {
     fun doCheckLoginState() {
         var user: FirebaseUser? = auth.currentUser
         if (user != null) {
-            chnageActivity()
+            loadFireBaseElseStart()
         }
     }
 
@@ -47,7 +58,7 @@ class LoginPresenter(val view:  LoginView): AnkoLogger {
     private fun createNewUser(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(view) { task ->
             if (task.isSuccessful) {
-                chnageActivity()
+                loadFireBaseElseStart()
             } else {
                 view.toast("Sign Up Failed: ${task.exception?.message}")
             }
@@ -58,7 +69,7 @@ class LoginPresenter(val view:  LoginView): AnkoLogger {
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(view) { task ->
             if (task.isSuccessful) {
-                chnageActivity()
+                loadFireBaseElseStart()
             } else {
                 view.toast("Sign Up Failed: ${task.exception?.message}")
             }
@@ -66,8 +77,16 @@ class LoginPresenter(val view:  LoginView): AnkoLogger {
         }
     }
 
-    private fun chnageActivity(){
+    private fun changeActivity(){
+        hideProgress()
         view.startActivity<HillfortListView>()
+    }
 
+    private fun loadFireBaseElseStart(){
+        if (fireStore != null) {
+            fireStore!!.fetchHillforts { changeActivity() }
+        } else {
+            changeActivity()
+        }
     }
 }

@@ -86,6 +86,7 @@ class HillfortListPresenter(val view: HillfortListView) {
 
     private fun signOut() {
         FirebaseAuth.getInstance().signOut()
+        app.hillforts.clear()
         view.startActivity<LoginView>()
     }
 

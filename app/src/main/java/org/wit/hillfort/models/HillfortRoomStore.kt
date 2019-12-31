@@ -35,4 +35,8 @@ class HillfortRoomStore(val context: Context) : HillfortStore {
     override fun findOne(id: Long): HillfortModel {
         return dao.findById(id)
     }
+
+    override fun clear() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
