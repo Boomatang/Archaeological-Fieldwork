@@ -3,16 +3,15 @@ package org.wit.hillfort.views.hillfortlist
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
-import org.wit.hillfort.views.maphillforts.MapHillfortsView
 
-class HillfortListView : AppCompatActivity(), HillfortListener {
+class HillfortListView : AppCompatActivity(), HillfortListener, AnkoLogger {
 
   lateinit var presenter: HillfortListPresenter
   lateinit var menu: Menu
@@ -23,6 +22,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
     setupToolbar()
     presenter = HillfortListPresenter(this)
     showHillfortListView()
+    setupListeners()
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,8 +46,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    val hideFav = menu.findItem(R.id.hide_fav)
-    showHillfortListView(hideFav.isVisible)
+    showHillfortListView(hasFilter())
     super.onActivityResult(requestCode, resultCode, data)
 
   }
@@ -61,4 +60,16 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
     toolbar.title = title
     setSupportActionBar(toolbar)
   }
+
+  fun hasFilter() : Boolean{
+    val hideFav = menu.findItem(R.id.hide_fav)
+    return hideFav.isVisible
+  }
+
+  private fun setupListeners(){
+    searchView.setOnQueryTextListener(SearchViewListener(this))
+
+  }
+
+
 }

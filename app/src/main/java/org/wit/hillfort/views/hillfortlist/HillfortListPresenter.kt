@@ -1,7 +1,9 @@
 package org.wit.hillfort.views.hillfortlist
 
+import android.annotation.SuppressLint
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.*
 import org.wit.hillfort.R
@@ -10,9 +12,11 @@ import org.wit.hillfort.helpers.EDIT
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.edithillfort.EditHillfortView
+import org.wit.hillfort.views.login.LoginView
 import org.wit.hillfort.views.maphillforts.MapHillfortsView
+import java.util.*
 
-class HillfortListPresenter(val view: HillfortListView) {
+class HillfortListPresenter(val view: HillfortListView) : AnkoLogger {
 
     var app: MainApp
 
@@ -36,15 +40,22 @@ class HillfortListPresenter(val view: HillfortListView) {
             R.id.show_fav -> showFavourites()
             R.id.hide_fav -> displayAll()
             R.id.view_map -> view.startActivity<MapHillfortsView>()
+            R.id.sign_out -> signOut()
         }
     }
-    fun doFilterHillfortList(filter: Boolean){
+    @SuppressLint("DefaultLocale")
+    fun doFilterHillfortList(filter: Boolean = false, search: String = ""){
         doAsync {
-            val hillforts = if (filter) {
+            var hillforts = if (filter) {
                 getHillforts().filter { it.favourite }
 
             } else {
                 getHillforts()
+            }
+
+            if (search.isNotEmpty()) {
+                hillforts = hillforts.filter { it.title.toLowerCase().contains(search)
+                }
             }
             uiThread {
                 setupHillfortsListView(hillforts)
@@ -80,4 +91,12 @@ class HillfortListPresenter(val view: HillfortListView) {
         view.recyclerView.adapter = HillfortAdapter(hillfort, view)
         view.recyclerView.adapter?.notifyDataSetChanged()
     }
+
+    private fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+        app.hillforts.clear()
+        view.startActivity<LoginView>()
+        info { FirebaseAuth.getInstance().currentUser }
+    }
+
 }
