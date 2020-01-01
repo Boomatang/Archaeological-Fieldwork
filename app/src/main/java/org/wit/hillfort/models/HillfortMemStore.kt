@@ -31,4 +31,8 @@ class HillfortMemStore : HillfortStore {
     override fun delete(hillfort: HillfortModel) {
         hillforts.remove(hillfort)
     }
+
+    override fun clear() {
+        hillforts.clear()
+    }
 }

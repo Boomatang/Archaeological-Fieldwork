@@ -15,3 +15,14 @@ fun updateHillfort(hillfort: HillfortModel, hillforts: List<HillfortModel>) {
         foundHillfort.favourite = hillfort.favourite
     }
 }
+
+fun setNewHillfortData(existHillfortModel: HillfortModel, newHillfortModel: HillfortModel) {
+    existHillfortModel.title = newHillfortModel.title
+    existHillfortModel.description = newHillfortModel.description
+    existHillfortModel.image = newHillfortModel.image
+    existHillfortModel.rating = newHillfortModel.rating
+    existHillfortModel.lat = newHillfortModel.lat
+    existHillfortModel.lng = newHillfortModel.lng
+    existHillfortModel.zoom = newHillfortModel.zoom
+    existHillfortModel.favourite = newHillfortModel.favourite
+}

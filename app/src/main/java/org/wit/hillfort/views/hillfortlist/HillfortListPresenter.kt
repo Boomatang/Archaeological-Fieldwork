@@ -14,7 +14,7 @@ import org.wit.hillfort.views.edithillfort.EditHillfortView
 import org.wit.hillfort.views.login.LoginView
 import org.wit.hillfort.views.maphillforts.MapHillfortsView
 
-class HillfortListPresenter(val view: HillfortListView) {
+class HillfortListPresenter(val view: HillfortListView) : AnkoLogger {
 
     var app: MainApp
 
@@ -86,7 +86,9 @@ class HillfortListPresenter(val view: HillfortListView) {
 
     private fun signOut() {
         FirebaseAuth.getInstance().signOut()
+        app.hillforts.clear()
         view.startActivity<LoginView>()
+        info { FirebaseAuth.getInstance().currentUser }
     }
 
 }
