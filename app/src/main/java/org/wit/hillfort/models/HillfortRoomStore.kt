@@ -2,10 +2,12 @@ package org.wit.hillfort.models
 
 import android.content.Context
 import androidx.room.Room
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.wit.hillfort.room.Database
 import org.wit.hillfort.room.HillfortDao
 
-class HillfortRoomStore(val context: Context) : HillfortStore {
+class HillfortRoomStore(val context: Context) : HillfortStore, AnkoLogger {
 
     var dao: HillfortDao
 
@@ -37,6 +39,6 @@ class HillfortRoomStore(val context: Context) : HillfortStore {
     }
 
     override fun clear() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        info { "Should clear the db" }
     }
 }

@@ -38,6 +38,7 @@ class LoginPresenter(val view:  LoginView): AnkoLogger {
     }
 
     fun doCheckLoginState() {
+        info { "Checking log in state" }
         var user: FirebaseUser? = auth.currentUser
         if (user != null) {
             loadFireBaseElseStart()
@@ -84,6 +85,7 @@ class LoginPresenter(val view:  LoginView): AnkoLogger {
 
     private fun loadFireBaseElseStart(){
         if (fireStore != null) {
+            info {"APP: I was so called"}
             fireStore!!.fetchHillforts { changeActivity() }
         } else {
             changeActivity()

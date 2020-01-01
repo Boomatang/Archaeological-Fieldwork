@@ -3,9 +3,11 @@ package org.wit.hillfort.models
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.wit.hillfort.helpers.setNewHillfortData
 
-class HillfortFireStore(val context: Context) : HillfortStore {
+class HillfortFireStore(val context: Context) : HillfortStore, AnkoLogger {
 
     val hillforts = ArrayList<HillfortModel>()
     lateinit var userId: String
@@ -36,11 +38,11 @@ class HillfortFireStore(val context: Context) : HillfortStore {
             setNewHillfortData(foundHillfort, hillfort)
         }
 
-        db.child("users").child(userId).child("hillfortss").child(hillfort.fbId).setValue(hillfort)
+        db.child("users").child(userId).child("hillforts").child(hillfort.fbId).setValue(hillfort)
     }
 
     override fun delete(hillfort: HillfortModel) {
-        db.child("users").child(userId).child("hillfortss").child(hillfort.fbId).removeValue()
+        db.child("users").child(userId).child("hillforts").child(hillfort.fbId).removeValue()
         hillforts.remove(hillfort)
     }
 
@@ -56,7 +58,8 @@ class HillfortFireStore(val context: Context) : HillfortStore {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                dataSnapshot.children.mapNotNullTo(hillforts) {
+                dataSnapshot!!.children.mapNotNullTo(hillforts) {
+                    info {it}
                     it.getValue<HillfortModel>(HillfortModel::class.java)
                 }
                 hillforsReady()
